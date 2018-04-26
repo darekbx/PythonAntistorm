@@ -84,7 +84,7 @@ class AntiStormGenerator:
 
     def markWarsaw(self, image):
         draw = ImageDraw.Draw(image)
-        dotSize = 3
+        dotSize = 2
         x = self.warsawPosition[0]
         y = self.warsawPosition[1]
         left = x - dotSize
