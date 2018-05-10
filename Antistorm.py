@@ -5,6 +5,11 @@ import timeit
 from PIL import Image, ImageDraw
 from StringIO import StringIO
 
+import sys
+sys.path.insert(0, './display/')
+
+import display
+
 from AntistormInfo import AntistormInfo
 
 class AntiStormGenerator:
@@ -36,6 +41,7 @@ class AntiStormGenerator:
                 self.downloadAndResizeImage(url, index)
             self.concatImages()
             self.printComputationTime(computationStart)
+            refreshDisplay()
 
     def printComputationTime(self, computationStart):
         computationStop = timeit.default_timer()
