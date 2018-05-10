@@ -21,9 +21,11 @@ class AntiStormGenerator:
     imageExtension = '.png'
     imagesTempDir = 'temp'
     outputImage = 'out.png'
+    mapImage = 'map.png'
     expectedChunksCount = 6
     targetSize = (350, 350)
-    warsawPosition = (179, 109)
+    einkSize = (176, 264)
+    warsawPosition = (230, 135)
     warsawPositionColor = (250, 50, 0)
 
     def createFullMap(self):
@@ -75,12 +77,16 @@ class AntiStormGenerator:
 
         blended = Image.alpha_composite(rainImage, stormImage)  # append storm
         blended = Image.alpha_composite(blended, windImage)  # append wind
-        blended = Image.alpha_composite(mapImage, blended)  # append map
+        #blended = Image.alpha_composite(mapImage, blended)  # append map
 
-        cropped = blended.crop((50, 25, 300, 275))
-        self.markWarsaw(cropped)
+        #self.markWarsaw(blended)
 
+        leftOffset = 120
+        cropped = blended.crop((leftOffset, 0, self.einkSize[0] + leftOffset, self.einkSize[1])) 
         cropped.save(self.outputImage, 'png')
+
+        mapImage = mapImage.crop((leftOffset, 0, self.einkSize[0] + leftOffset, self.einkSize[1])) 
+        mapImage.save(self.mapImage, 'png')
 
     def markWarsaw(self, image):
         draw = ImageDraw.Draw(image)
