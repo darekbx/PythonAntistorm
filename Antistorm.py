@@ -75,14 +75,16 @@ class AntiStormGenerator:
         mapImage = Image.open(images[3])
         #probabilityImage = Image.open(images[4])
 
-        blended = Image.alpha_composite(rainImage, stormImage)  # append storm
-        blended = Image.alpha_composite(blended, windImage)  # append wind
+        #blended = Image.alpha_composite(rainImage, stormImage)  # append storm
+        #blended = Image.alpha_composite(blended, windImage)  # append wind
         #blended = Image.alpha_composite(mapImage, blended)  # append map
-
         #self.markWarsaw(blended)
+		
+        bg = Image.new('RGBA', (350,350), "white")
+        bg.paste(stormImage, (0,0), stormImage)
 
         leftOffset = 120
-        cropped = blended.crop((leftOffset, 0, self.einkSize[0] + leftOffset, self.einkSize[1])) 
+        cropped = bg.crop((leftOffset, 0, self.einkSize[0] + leftOffset, self.einkSize[1])) 
         cropped.save(self.outputImage, 'png')
 
         mapImage = mapImage.crop((leftOffset, 0, self.einkSize[0] + leftOffset, self.einkSize[1])) 
