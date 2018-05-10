@@ -8,7 +8,7 @@ from StringIO import StringIO
 import sys
 sys.path.insert(0, './display/')
 
-import display
+from display import refreshDisplay
 
 from AntistormInfo import AntistormInfo
 
