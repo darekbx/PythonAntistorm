@@ -11,8 +11,6 @@ class AntiStormGenerator:
     host = 'https://antistorm.eu'
     apiAddress = "{0}/ajaxPaths.php?lastTimestamp=0&type=radar"
     mapAddress = "{0}/map/final-map.png"
-    windAddress = "{0}/archive/{1}/{2}-radar-velocityMapImg.png"
-    probabilityAddress = "{0}/archive/{1}/{2}-radar-probabilitiesImg.png"
     rainAddress = "{0}/visualPhenom/{1}-radar-visualPhenomenon.png"
     stormAddress = "{0}/visualPhenom/{1}-storm-visualPhenomenon.png"
 
@@ -45,15 +43,12 @@ class AntiStormGenerator:
         print "Generated in: {0:.2f}s".format(computationTime)
 
     def createUrls(self, antistormInfo):
-        windUrl = self.windAddress.format(
-            self.host, antistormInfo.folderName, antistormInfo.fileName)
-        #probabilityUrl = self.probabilityAddress.format(self.host, antistormInfo.folderName, antistormInfo.fileName)
         rainUrl = self.rainAddress.format(
             self.host, antistormInfo.frontFileName)
         stormUrl = self.stormAddress.format(
             self.host, antistormInfo.frontFileName)
         mapUrl = self.mapAddress.format(self.host)
-        return [windUrl, rainUrl, stormUrl, mapUrl]  # , probabilityUrl]
+        return [rainUrl, stormUrl, mapUrl]
 
     def downloadAndResizeImage(self, address, index):
         try:
@@ -69,19 +64,15 @@ class AntiStormGenerator:
         images = self.findImages()
         images.sort()
 
-        windImage = Image.open(images[0])
-        rainImage = Image.open(images[1])
-        stormImage = Image.open(images[2])
-        mapImage = Image.open(images[3])
-        #probabilityImage = Image.open(images[4])
+        rainImage = Image.open(images[0])
+        stormImage = Image.open(images[1])
+        mapImage = Image.open(images[2])
 
-        #blended = Image.alpha_composite(rainImage, stormImage)  # append storm
-        #blended = Image.alpha_composite(blended, windImage)  # append wind
-        #blended = Image.alpha_composite(mapImage, blended)  # append map
-        #self.markWarsaw(blended)
+        blended = Image.alpha_composite(rainImage, stormImage)
+        bg = Image.new(self.colorSpace, self.targetSize, "white")
+        bg.paste(blended, (0,0), blended)
 		
-        bg = Image.new('RGBA', (350,350), "white")
-        bg.paste(stormImage, (0,0), stormImage)
+        self.markWarsaw(bg)
 
         leftOffset = 120
         cropped = bg.crop((leftOffset, 0, self.einkSize[0] + leftOffset, self.einkSize[1])) 
