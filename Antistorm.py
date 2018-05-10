@@ -41,7 +41,7 @@ class AntiStormGenerator:
                 self.downloadAndResizeImage(url, index)
             self.concatImages()
             self.printComputationTime(computationStart)
-			print 'Refreshing display...'
+            print 'Refreshing display...'
             refreshDisplay()
 
     def printComputationTime(self, computationStart):
