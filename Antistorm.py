@@ -24,7 +24,7 @@ class AntiStormGenerator:
     imagesTempDir = 'temp'
     outputImage = 'out.png'
     expectedChunksCount = 6
-    targetSize = (350, 350)
+    targetSize = (290, 290)
     einkSize = (176, 264)
     warsawPosition = (230, 135)
     warsawPositionColor = (250, 50, 0)
@@ -77,7 +77,7 @@ class AntiStormGenerator:
 		
         self.markWarsaw(bg)
 
-        leftOffset = 120
+        leftOffset = 70
         cropped = bg.crop((leftOffset, 0, self.einkSize[0] + leftOffset, self.einkSize[1])) 
         cropped.save(self.outputImage, 'png')
 
