@@ -15,7 +15,6 @@ from AntistormInfo import AntistormInfo
 class AntiStormGenerator:
     host = 'https://antistorm.eu'
     apiAddress = "{0}/ajaxPaths.php?lastTimestamp=0&type=radar"
-    mapAddress = "{0}/map/final-map.png"
     rainAddress = "{0}/visualPhenom/{1}-radar-visualPhenomenon.png"
     stormAddress = "{0}/visualPhenom/{1}-storm-visualPhenomenon.png"
 
@@ -24,7 +23,6 @@ class AntiStormGenerator:
     imageExtension = '.png'
     imagesTempDir = 'temp'
     outputImage = 'out.png'
-    mapImage = 'map.png'
     expectedChunksCount = 6
     targetSize = (350, 350)
     einkSize = (176, 264)
@@ -54,8 +52,7 @@ class AntiStormGenerator:
             self.host, antistormInfo.frontFileName)
         stormUrl = self.stormAddress.format(
             self.host, antistormInfo.frontFileName)
-        mapUrl = self.mapAddress.format(self.host)
-        return [rainUrl, stormUrl, mapUrl]
+        return [rainUrl, stormUrl]
 
     def downloadAndResizeImage(self, address, index):
         try:
@@ -73,7 +70,6 @@ class AntiStormGenerator:
 
         rainImage = Image.open(images[0])
         stormImage = Image.open(images[1])
-        mapImage = Image.open(images[2])
 
         blended = Image.alpha_composite(rainImage, stormImage)
         bg = Image.new(self.colorSpace, self.targetSize, "white")
@@ -84,9 +80,6 @@ class AntiStormGenerator:
         leftOffset = 120
         cropped = bg.crop((leftOffset, 0, self.einkSize[0] + leftOffset, self.einkSize[1])) 
         cropped.save(self.outputImage, 'png')
-
-        mapImage = mapImage.crop((leftOffset, 0, self.einkSize[0] + leftOffset, self.einkSize[1])) 
-        mapImage.save(self.mapImage, 'png')
 
     def markWarsaw(self, image):
         draw = ImageDraw.Draw(image)
