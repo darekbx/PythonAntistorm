@@ -26,7 +26,7 @@ class AntiStormGenerator:
     expectedChunksCount = 6
     targetSize = (290, 290)
     einkSize = (176, 264)
-    warsawPosition = (230, 135)
+    warsawPosition = (192, 110)
     warsawPositionColor = (250, 50, 0)
 
     def createFullMap(self):
