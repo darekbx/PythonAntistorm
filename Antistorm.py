@@ -79,6 +79,13 @@ class AntiStormGenerator:
 
         leftOffset = 70
         cropped = bg.crop((leftOffset, 0, self.einkSize[0] + leftOffset, self.einkSize[1])) 
+
+        pixdata = cropped.load()
+        for y in xrange(cropped.size[1]):
+            for x in xrange(cropped.size[0]):
+                if pixdata[x, y] != (255, 255, 255, 255):
+                    pixdata[x, y] = (0, 0, 0, 255)
+
         cropped.save(self.outputImage, 'png')
 
     def markWarsaw(self, image):
