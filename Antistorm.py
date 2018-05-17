@@ -75,7 +75,7 @@ class AntiStormGenerator:
         bg = Image.new(self.colorSpace, self.targetSize, "white")
         bg.paste(blended, (0,0), blended)
 		
-        self.markWarsaw(bg)
+        #self.markWarsaw(bg)
 
         leftOffset = 70
         cropped = bg.crop((leftOffset, 0, self.einkSize[0] + leftOffset, self.einkSize[1])) 
